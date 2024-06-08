@@ -26,3 +26,7 @@ Ini adalah Tugas Akhir Kelas Pembelajaran Mesin End-to-End yang berfokus pada si
 - Dapat memperoleh confusion matrix dan metrik kinerja: akurasi, presisi, recall
 Akhirnya, saya memvisualisasikan metrik kinerja untuk semua model.
 Naive Bayes adalah yang terbaik untuk kasus saya.
+
+## Result with UI tensorflow:
+![image](https://github.com/revelwivanto/PhisingdetectionML/assets/116476269/d19b295e-18d2-4594-bf9c-3cc3fd9955f6)
+
