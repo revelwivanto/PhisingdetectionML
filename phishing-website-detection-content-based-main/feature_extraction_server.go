@@ -15,14 +15,14 @@ type FeatureResponse struct {
 	Features []int `json:"features"`
 }
 
-// Extracts features from HTML content
+// ambil features dari html
 func extractFeatures(html string) ([]int, error) {
 	doc, err := goquery.NewDocumentFromReader(strings.NewReader(html))
 	if err != nil {
 		return nil, err
 	}
 
-	// Call feature extraction functions from your custom package
+	// call features
 	return []int{
 		features.HasTitle(doc),
 		features.HasInput(doc),

@@ -18,12 +18,12 @@ from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 
 
-# Step 2 read the csv files and create pandas dataframes
+# Step 2 baca csv dan buat panda dataframe
 legitimate_df = pd.read_csv("structured_data_legitimate.csv")
 phishing_df = pd.read_csv("structured_data_phishing.csv")
 
 
-# Step 3 combine legitimate and phishing dataframes, and shuffle
+# Step 3 combine legitimate and phishing dataframes,  shuffle
 df = pd.concat([legitimate_df, phishing_df], axis=0)
 
 df = df.sample(frac=1)
@@ -38,11 +38,11 @@ X = df.drop('label', axis=1)
 Y = df['label']
 
 
-# Step 5 split data to train and test
+# Step 5 split data jd train and test
 x_train, x_test, y_train, y_test = train_test_split(X, Y, test_size=0.2, random_state=10)
 
 
-# Step 6 create a ML model using sklearn
+# Step 6 create ml model sklearn
 svm_model = svm.LinearSVC()
 
 # Random Forest
@@ -66,15 +66,15 @@ kn_model = KNeighborsClassifier()
 # Gaussian Process
 #gp_model = GaussianProcessClassifier(1.0 * RBF(1.0))
 
-# Step 7 train the model
+# Step 7 train 
 svm_model.fit(x_train, y_train)
 
 
-# Step 8 make some predictions using test data
+# Step 8 make some predictions dengan test data
 predictions = svm_model.predict(x_test)
 
 
-# Step 9 create a confusion matrix and tn, tp, fn , fp
+# Step 9 confusion matrix and tn, tp, fn , fp
 # confusion_matrix: This function from the sklearn.metrics module computes the confusion matrix to evaluate the accuracy of a classification.
 # y_true=y_test: y_test is the array of true labels for the test set.
 # y_pred=predictions: predictions is the array of predicted labels made by the model.
