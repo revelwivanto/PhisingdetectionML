@@ -14,7 +14,7 @@ import (
 	"github.com/go-gota/gota/series"
 )
 
-func main() {
+func mai() {
 	// Define folder name
 	folderName := "mini_dataset"
 

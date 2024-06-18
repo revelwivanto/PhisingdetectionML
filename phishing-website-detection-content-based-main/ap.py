@@ -1,8 +1,7 @@
 import machine_learning as ml
-import feature_extraction_backup as fe
-from bs4 import BeautifulSoup
 import requests as re
 from requests.exceptions import RequestException
+import json
 
 # Define your models in a list
 models = [
@@ -29,9 +28,28 @@ def get_url_content(url):
         print("Error fetching URL:", e)
         return None
 
+def extract_features(html_content):
+    try:
+        # Send a POST request to the Go feature extraction service
+        response = re.post("http://localhost:8080/extract_features", data={"html": html_content})
+        if response.status_code != 200:
+            print("Feature extraction service responded with status code: ", response.status_code)
+            return None
+        
+        # Parse the JSON response
+        feature_response = response.json()
+        return feature_response["features"]
+    except RequestException as e:
+        # Catch and print any request-related exceptions
+        print("Error extracting features:", e)
+        return None
+    except json.JSONDecodeError as e:
+        print("Error parsing JSON response:", e)
+        return None
+
 def classify_url(models, vector):
     for mod in models:
-        result = mod.predict(vector)
+        result = mod.predict([vector])  # Wrap vector in a list to match expected input shape
         # Check the prediction result
         if result[0] == 0:
             print("This web page seems legitimate!")
@@ -50,13 +68,13 @@ def main():
         if content is None:
             continue
         
-        # Parse the content with BeautifulSoup
-        soup = BeautifulSoup(content, "html.parser")
-        # Assuming fe.create_vector is defined elsewhere
-        vector = [fe.create_vector(soup)]
+        # Extract features using the Go service
+        features = extract_features(content)
+        if features is None:
+            continue
         
         # Classify the URL using the models
-        classify_url(models, vector)
+        classify_url(models, features)
 
 if __name__ == "__main__":
     main()
